@@ -3,9 +3,6 @@ from datetime import datetime
 import os
 import streamlit as st
 
-st.set_page_config(layout="wide")
-st.title("Application de flashcard")
-
 
 # Fonction pour initialiser la base de données
 def init_db():
@@ -36,18 +33,15 @@ def init_db():
     )
     c.execute(
         """INSERT INTO themes (id, theme) VALUES 
-              (1, 'Introduction à la chimie quantique'),
-              (2, 'Introduction à la chimie organique'),
-              (3, 'Introduction à l''analyse de données chimique'),
-              (4, 'Introduction au machine learning'),
-              (5, 'Introduction au deep learning');"""
+              (1, 'Prise en main de la machine'),
+              (2, 'Python'),
+              (3, 'SQL'),
+              (4, 'Git'),
+              (5, 'La méthodologie du data scientist');"""
     )
     conn.commit()
     conn.close()
 
-
-if not os.path.exists("flashcards.db"):
-    init_db()
 
 # Fonctions pour le CRUD de cards
 
