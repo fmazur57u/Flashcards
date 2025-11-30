@@ -13,24 +13,28 @@ st.write("##")
 st.divider()
 st.write("##")
 stats = get_stats()
-
-if stats:
+bonne_reponses = [stat[0] for stat in stats]
+mauvaise_reponses = [stat[1] for stat in stats]
+date = [stat[2] for stat in stats]
+st.write(f"{bonne_reponses}")
+st.write(f"{mauvaise_reponses}")
+if len(stats) != 0:
     fig = px.line(
-        x=stats[3],
-        y=[stats[1], stats[2]],
+        x=date,
+        y=[bonne_reponses, mauvaise_reponses],
         color_discrete_map={"bonnes_reponses": "blue", "mauvaises_reponses": "red"},
         title="Evolution des réponses correctes et incorrectes par jours",
     )
     fig.update_traces(mode="markers+lines")
     fig.update_xaxes(showspikes=True)
     fig.update_yaxes(showspikes=True)
-    fig.show()
+    st.plotly_chart(fig)
     st.write("##")
     st.divider()
     st.write("##")
     today = datetime.now().strftime("%Y-%m-%d")
-    today_stat = [[stat[1], stat[2]] for stat in stats if stat[-1] == today]
+    today_stat = [[stat[0], stat[1]] for stat in stats if stat[-1] == today]
     fig = px.pie(values=today_stat, names=today_stat, color=today_stat, hole=0.3)
-    fig.show()
+    st.plotly_chart(fig)
 else:
     st.write("Il n'y a pas encore de statistiques.")

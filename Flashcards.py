@@ -38,19 +38,21 @@ if multiselect:
                 carte for carte in card_by_themes if carte[3] == max_proba
             ]
             current_card = random.choice(most_possible_card)
-            text_input = st.text_input("Question", current_card[1])
-            text_area = st.text_area("Votre réponse")
-            submit_button = st.form_submit_button("submit")
-            if submit_button:
-                reponse = st.text_input("La bonne réponse", current_card[2])
+            question = st.text_input("Question", current_card[1])
+            reponse = st.text_area("Votre réponse")
+            submit_reponse = st.form_submit_button("submit")
+            if submit_reponse:
+                vrai_reponse = st.text_input("La bonne réponse", current_card[2])
                 st.divider()
-                select_box = st.selectbox("Avez vous bien répondue", ["Oui", "Non"])
-                if select_box == "Oui":
-                    update_stats(True)
-                    update_card_probability(current_card[0], True)
-                else:
-                    update_stats(False)
-                    update_card_probability(current_card[0], False)
+                est_correcte = st.selectbox("Avez vous bien répondue", ["Oui", "Non"])
+                submit_correcte = st.form_submit_button("submit_reponse")
+                if submit_correcte:
+                    if est_correcte == "Oui":
+                        update_stats(True)
+                        update_card_probability(current_card[0], True)
+                    else:
+                        update_stats(False)
+                        update_card_probability(current_card[0], False)
     else:
         st.write(card_by_themes)
 else:
