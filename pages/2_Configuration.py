@@ -22,6 +22,7 @@ with st.form("ajouter_theme"):
 
 st.write("##")
 st.write("##")
+
 with st.form("supprimer_theme"):
     st.markdown(
         "<h1 style='text-align: center; color: black;'>Supprimer des thèmes </h1>",
@@ -34,6 +35,23 @@ with st.form("supprimer_theme"):
     if supprimer_theme:
         delete_theme(theme_a_supprimer[0])
         st.write(f"Le thème {theme_a_supprimer[1]} à bien été supprimer.")
+
+st.write("##")
+st.write("##")
+
+with st.form("update_theme"):
+    st.markdown(
+        "<h1 style='text-align: center; color: black;'>Mettre à jour des thèmes </h1>",
+        unsafe_allow_html=True,
+    )
+    theme_a_update = st.selectbox(
+        "Sélectionnez un thème à mettre à jour", get_all_themes()
+    )
+    nouveau_theme = st.text_area("Nouveau nom du thème")
+    updated_theme = st.form_submit_button("Mettre à jour le thème")
+    if updated_theme:
+        update_theme(theme_a_update[0], nouveau_theme)
+        st.write(f"Le thème {theme_a_update[1]} à bien été mis à jour.")
 
 st.write("##")
 st.write("##")
@@ -53,3 +71,19 @@ with st.form("ajouter_flashcards"):
     if ajouter_flashcard:
         create_card(question, reponse, 1, theme_flashcard[0])
         st.write(f"La flashcard {question} à bien été ajouter.")
+
+st.write("##")
+st.write("##")
+
+with st.form("supprimer flashcards"):
+    st.markdown(
+        "<h1 style='text-align: center; color: black;'>Supprimer flashcards</h1>",
+        unsafe_allow_html=True,
+    )
+    flashcard_a_supprimer = st.selectbox(
+        "Sélectionnez une flashcard à supprimer", get_all_cards()
+    )
+    supprimer_flashcard = st.form_submit_button("Supprimer une flashcard")
+    if supprimer_flashcard:
+        delete_cards(flashcard_a_supprimer[0])
+        st.write(f"La flashcard {flashcard_a_supprimer[1]} à bien été supprimer.")

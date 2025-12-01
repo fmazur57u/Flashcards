@@ -110,6 +110,16 @@ update_card(
 """
 
 
+# Supprimer carte
+def delete_cards(id):
+    conn = sqlite3.connect("flashcards.db")
+    c = conn.cursor()
+    c.execute("PRAGMA foreign_keys = ON;")
+    c.execute("""DELETE FROM cards WHERE id = ?""", (id,))
+    conn.commit()
+    conn.close()
+
+
 # Récupérer toutes les cartes
 def get_all_cards():
     conn = sqlite3.connect("flashcards.db")
@@ -246,7 +256,10 @@ def update_stats(is_correct):
     c.execute("PRAGMA foreign_keys = ON;")
     today = datetime.now().strftime("%Y-%m-%d")
     try:
-        c.execute("SELECT * FROM stats WHERE date = ?", (today,))
+        c.execute(
+            "SELECT id, bonnes_reponses, mauvaises_reponses FROM stats WHERE date = ?",
+            (today,),
+        )
     except Exception as e:
         print("Exception: {}".format(e))
         raise Exception(e)
